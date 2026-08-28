@@ -160,11 +160,11 @@ while True:
 
     elif current_mode == "data":
 
-        temp_c = temp_c()
-        temp_k = temp_k()
+        tempc = temp_c()
+        tempk = temp_k()
         lat, long = position()
-        altitude = altitude()
-        satellites = satellites()
+        alt = altitude()
+        sat = satellites()
         ax, ay, az = acceleration()
         gx, gy, gz = gyroscope()
         magn = magnfield()
