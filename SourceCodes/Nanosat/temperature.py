@@ -12,7 +12,7 @@ def temp_c():
     
     if value<=0:
         raise ValueError("Temperature sensor return ADC=0")
-    R=R0*(1023.0/value-1.0) ### DA GO POPRAVQ
+    R=R0*(1023.0/value-1.0)
 
     temp=1.0/(math.log(R/R0)/Beta+1/298.15)-273.15
 

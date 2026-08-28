@@ -1,7 +1,7 @@
-from temperature import get_temperature_c, get_temperature_k
+from temperature import temp_c, temp_k
 from RH_RF95 import RH_RF95
-from gps import get_position, get_altitude, get_satellites
-from imu import get_acceleration, get_gyroscope, get_magnetic_field
+from gps import position, altitude, satellites
+from imu import acceleration, gyroscope, magnfield
 
 import time
 
@@ -66,9 +66,9 @@ while True:
             current_mode = "data"
 
     if current_mode == "temp_c":
-        temperature = get_temperature_c()
+        temp = temp_c()
 
-        response = f"{temperature:.2f} C"
+        response = f"{temp:.2f} C"
 
         radio.send(response.encode() + b"\x00")
         radio.waitPacketSent()
@@ -76,9 +76,9 @@ while True:
         time.sleep(1)
 
     elif current_mode == "temp_k":
-        temperature = get_temperature_k()
+        temp = temp_k()
 
-        response = f"{temperature:.2f} K"
+        response = f"{temp:.2f} K"
 
         radio.send(response.encode() + b"\x00")
         radio.waitPacketSent()
@@ -86,17 +86,17 @@ while True:
         time.sleep(1)
 
     elif current_mode == "gps":
-        latitude, longitude = get_position()
+        lat, long = position()
 
-        response = f"{latitude:.6f},{longitude:.6f}"
+        response = f"{lat:.6f},{long:.6f}"
         radio.send(response.encode() + b"\x00")
         radio.waitPacketSent()
 
         time.sleep(1)
 
     elif current_mode == "alt":
-        altitide = get_altitude()
-        response = f"{altitide:.2f} m"
+        alt = altitude()
+        response = f"{alt:.2f} m"
 
         radio.send(response.encode() + b"\x00")
         radio.waitPacketSent()
@@ -105,8 +105,8 @@ while True:
         
 
     elif current_mode == "satellites":
-        satellites = get_satellites()
-        response = str(satellites)
+        sat = satellites()
+        response = str(sat)
 
         radio.send(response.encode() + b"\x00")
         radio.waitPacketSent()
@@ -114,7 +114,7 @@ while True:
         time.sleep(1)
 
     elif current_mode == "acc":
-        ax, ay, az = get_acceleration()
+        ax, ay, az = acceleration()
 
         response = (
             f"ACC X:{ax:.2f} "
@@ -128,7 +128,7 @@ while True:
         time.sleep(1)
 
     elif current_mode == "gyro":
-        gx, gy, gz = get_gyroscope()
+        gx, gy, gz = gyroscope()
 
         response = (
             f"GYRO X:{gx:.2f} "
@@ -142,10 +142,10 @@ while True:
         time.sleep(1)
 
     elif current_mode == "mag":
-        magnetic = get_magnetic_field()
+        magn = magnfield()
 
-        if magnetic is not None:
-            mx, my, mz = magnetic
+        if magn is not None:
+            mx, my, mz = magn
 
             response = (
                 f"MAG X:{mx:.2f} "
@@ -160,17 +160,17 @@ while True:
 
     elif current_mode == "data":
 
-        temp_c = get_temperature_c()
-        temp_k = get_temperature_k()
-        latitude, longitude = get_position()
-        altitude = get_altitude()
-        satellites = get_satellites()
-        ax, ay, az = get_acceleration()
-        gx, gy, gz = get_gyroscope()
-        magnetic = get_magnetic_field()
+        temp_c = temp_c()
+        temp_k = temp_k()
+        lat, long = position()
+        altitude = altitude()
+        satellites = satellites()
+        ax, ay, az = acceleration()
+        gx, gy, gz = gyroscope()
+        magn = magnfield()
 
-        if magnetic is not None:
-            mx, my, mz = magnetic
+        if magn is not None:
+            mx, my, mz = magn
         else:
             mx = 0
             my = 0
@@ -178,9 +178,9 @@ while True:
 
         response = (
             f"T:{temp_c:.2f}C "
-            f"GPS:{latitude:.6f},{longitude:.6f} "
-            f"ALT:{altitude:.2f}m "
-            f"SAT:{satellites} "
+            f"GPS:{lat:.6f},{long:.6f} "
+            f"ALT:{alt:.2f}m "
+            f"SAT:{sat} "
             f"ACC:{ax:.2f},{ay:.2f},{az:.2f} "
             f"GYRO:{gx:.2f},{gy:.2f},{gz:.2f} "
             f"MAG:{mx:.2f},{my:.2f},{mz:.2f}"

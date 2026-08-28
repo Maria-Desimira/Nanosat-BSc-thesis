@@ -16,18 +16,18 @@ def _read_message():
             except pynmea2.ParseError:
                 pass
 
-def get_position():
+def position():
 
     msg= _read_message()
 
-    return msg.latitude, msg.longitude
+    return msg.lat, msg.long
 
 
-def get_altitude():
+def altitude():
     msg = _read_message()
-    return msg.altitude
+    return msg.alt
 
-def get_satellites():
+def satellites():
 
     msg = _read_message()
     return int(msg.num_sats)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     while True:
 
         print ("--------")
-        print ("latitude: ", get_position()[0])
-        print ("longitude: ", get_position()[1])
-        print ("altitude: ", get_altitude())
-        print ("satellites:", get_satellites())
+        print ("latitude: ", position()[0])
+        print ("longitude: ", position()[1])
+        print ("altitude: ", altitude())
+        print ("satellites:", satellites())

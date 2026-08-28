@@ -72,7 +72,7 @@ def _convert_little_endian(low, high):
 
     return value
 
-def get_acceleration():
+def acceleration():
     
     ax_raw = _read_icm_word(ACCEL_XOUT_H)
     ay_raw = _read_icm_word(ACCEL_XOUT_H + 2)
@@ -84,7 +84,7 @@ def get_acceleration():
 
     return ax, ay, az
 
-def get_gyroscope():
+def gyroscope():
 
     gx_raw = _read_icm_word(GYRO_XOUT_H)
     gy_raw = _read_icm_word(GYRO_XOUT_H + 2)
@@ -96,7 +96,7 @@ def get_gyroscope():
 
     return gx, gy, gz
 
-def get_magnetic_field():
+def magnfield():
 
     status = bus.read_byte_data(
         AK_ADDRESS,
